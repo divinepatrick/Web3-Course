@@ -6,7 +6,7 @@ uppercase B characters there are in the string.
 
 */
 
-function countBs(string) {
+function countBs (string) {
     let count = 0;
     for (let i = 0; i < string.length; i++) {
         if (string[i] === "B") {
@@ -15,7 +15,7 @@ function countBs(string) {
     }
     return count;
 }
-console.log(countBs("BBbbCDEFGHIJKL")); // 2
+console.log(countBs("WEB3 COURSE")); // 1
 
 
 
@@ -26,7 +26,7 @@ write a function called countChar that behaves like countBs,
  (rather than counting only uppercase B characters).
 */ 
 
-function countChar(string, char) {
+function countChar (string, char) {
     let count = 0;
     for (let i = 0; i < string.length; i++) {
         if (string[i] === char) {
@@ -36,4 +36,4 @@ function countChar(string, char) {
     return count;
 }
 
-console.log(countChar("BBbbCDEFGHIJKL", "K")); // 2
+console.log(countChar("DIVINE PATRICK", "I")); // 3
