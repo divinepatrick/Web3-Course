@@ -1,4 +1,3 @@
-// filepath: src/components/ConnectWallet.jsx
 import React from 'react';
 
 const ConnectWallet = ({ onConnect }) => {

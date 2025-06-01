@@ -1,4 +1,3 @@
-// filepath: src/utils/ethers.js
 import { ethers } from 'ethers';
 
 let provider;

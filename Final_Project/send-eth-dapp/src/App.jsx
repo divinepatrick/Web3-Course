@@ -1,4 +1,3 @@
-// filepath: src/App.jsx
 import React, { useState, useEffect } from 'react';
 import ConnectWallet from './components/ConnectWallet';
 import Balance from './components/Balance';

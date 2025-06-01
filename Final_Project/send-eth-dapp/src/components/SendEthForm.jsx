@@ -1,4 +1,3 @@
-// filepath: src/components/SendETHForm.jsx
 import React, { useState } from 'react';
 
 const SendETHForm = ({ onSend }) => {

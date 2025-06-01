@@ -1,4 +1,3 @@
-// filepath: src/components/Balance.jsx
 import React from 'react';
 
 const Balance = ({ balance }) => {
