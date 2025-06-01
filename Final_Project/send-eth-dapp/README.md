@@ -2,15 +2,15 @@
 
 ## Overview
 
-This project is a simple decentralized application (DApp) built with React and Vite that allows users to connect their MetaMask wallet, view their ETH balance, and send ETH to other Ethereum addresses. It leverages the `ethers` library to interact with the Ethereum blockchain.
+This project is a simple decentralized application (DApp) built with Ethersjs, React and Vite that allows users to connect their MetaMask wallet, view their ETH balance, and send ETH to other Ethereum addresses. It uses the `ethers` library to interact with the Ethereum blockchain.
 
 ## Features
 
--   **Connect Wallet:** Connect to the DApp using MetaMask.
--   **View Balance:** Display the connected wallet's ETH balance.
--   **Send ETH:** Send ETH to other Ethereum addresses.
+-   **Connect Wallet:** You can Connect to the DApp using MetaMask.
+-   **View Balance:** It will Display the connected wallet's ETH balance.
+-   **Send ETH:** Plus you can Send ETH to other Ethereum addresses.
 
-## Technologies Used
+## Technologies I Used
 
 -   **React:** A JavaScript library for building user interfaces.
 -   **Vite:** A build tool that provides a fast and efficient development experience.
@@ -22,8 +22,8 @@ This project is a simple decentralized application (DApp) built with React and V
 ### Prerequisites
 
 -   Node.js (version 18 or higher)
--   npm or yarn
--   MetaMask browser extension installed and configured
+-   npm
+-   MetaMask browser extension installed 
 
 ### Installation
 
@@ -38,8 +38,6 @@ This project is a simple decentralized application (DApp) built with React and V
 
     ```bash
     npm install
-    # or
-    yarn install
     ```
 
 ### Configuration
@@ -52,8 +50,6 @@ No specific configuration is required. The DApp uses the `window.ethereum` objec
 
     ```bash
     npm run dev
-    # or
-    yarn dev
     ```
 
 2.  Open your browser and navigate to the address provided by Vite (usually `http://localhost:5173/`).
@@ -114,6 +110,4 @@ The DApp follows a simple component-based architecture:
 
 Contributions are welcome! Please feel free to submit pull requests or open issues to suggest improvements or report bugs.
 
-## License
-
-MIT
+## Thats all I can think of!
