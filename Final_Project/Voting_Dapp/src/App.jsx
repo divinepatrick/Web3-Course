@@ -2,14 +2,25 @@ import React, { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
 import './App.css';
 
-// Contract address and ABI (replace with your actual contract address and ABI)
-const contractAddress = "0x35cd167FA931C6c5E07AbB2621846FC35D54baD6"; // Replace with the correct contract address
+// Contract address and the ABI 
+const contractAddress = "0x35cd167FA931C6c5E07AbB2621846FC35D54baD6";
 const contractABI = [
   {
     "inputs": [
       {
+        "internalType": "string[]",
+        "name": "proposalNames",
+        "type": "string[]"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "uint256",
-        "name": "_proposal",
+        "name": "proposal",
         "type": "uint256"
       }
     ],
@@ -20,24 +31,35 @@ const contractABI = [
   },
   {
     "inputs": [],
-    "name": "getProposal1Votes",
+    "name": "winnerName",
     "outputs": [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
+        "internalType": "string",
+        "name": "winnerName_",
+        "type": "string"
       }
     ],
     "stateMutability": "view",
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "getProposal2Votes",
-    "outputs": [
+    "inputs": [
       {
         "internalType": "uint256",
         "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "proposals",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "voteCount",
         "type": "uint256"
       }
     ],
@@ -48,46 +70,36 @@ const contractABI = [
 
 function App() {
   const [account, setAccount] = useState(null);
-  const [provider, setProvider] = useState(null);
-  const [signer, setSigner] = useState(null);
   const [contract, setContract] = useState(null);
-  const [proposal1Votes, setProposal1Votes] = useState(0);
-  const [proposal2Votes, setProposal2Votes] = useState(0);
-  const [isConnected, setIsConnected] = useState(false); // new state variable
+  const [hasVoted, setHasVoted] = useState(false);
+  const [winnerName, setWinnerName] = useState("");
+  const [proposals, setProposals] = useState([]);
 
   useEffect(() => {
     const init = async () => {
-      // Check if MetaMask is installed
       if (window.ethereum) {
         try {
-          // Request account access
           await window.ethereum.request({ method: 'eth_requestAccounts' });
-
-          // Check if the user is connected to the Sepolia network
           const chainId = await window.ethereum.request({ method: 'eth_chainId' });
-          if (chainId !== '0xaa36a7') { // Sepolia chain ID
+          if (chainId !== '0xaa36a7') {
             alert("Please connect to the Sepolia test network.");
             return;
           }
 
-          const newProvider = new ethers.BrowserProvider(window.ethereum);
-          setProvider(newProvider);
+          const provider = new ethers.BrowserProvider(window.ethereum);
+          const signer = await provider.getSigner();
+          const account = await signer.getAddress();
 
-          const newSigner = await newProvider.getSigner();
-          setSigner(newSigner);
+          setAccount(account);
+          const contract = new ethers.Contract(contractAddress, contractABI, signer);
+          setContract(contract);
 
-          const newAccount = await newSigner.getAddress();
-          setAccount(newAccount);
+          await getProposalNames(contract);
+          await checkVotedStatus(contract, account);
+          await getWinnerName(contract);
 
-          // Create contract instance
-          const newContract = new ethers.Contract(contractAddress, contractABI, newSigner);
-          setContract(newContract);
-
-          // Fetch initial vote counts
-          await updateVoteCounts(newContract);
-          setIsConnected(true); // Set isConnected to true after successful connection
         } catch (error) {
-          console.error("User denied account access or error initializing:", error);
+          console.error("Error initializing:", error);
         }
       } else {
         console.log("Please install MetaMask");
@@ -97,25 +109,45 @@ function App() {
     init();
   }, []);
 
-  const updateVoteCounts = async (contractInstance) => {
+  const getProposalNames = async (contract) => {
     try {
-      const p1Votes = await contractInstance.getProposal1Votes();
-      const p2Votes = await contractInstance.getProposal2Votes();
-      setProposal1Votes(p1Votes.toString());
-      setProposal2Votes(p2Votes.toString());
+      const proposalList = [];
+      for (let i = 0; i < 2; i++) {
+        const proposal = await contract.proposals(i);
+        proposalList.push(proposal.name);
+      }
+      setProposals(proposalList);
     } catch (error) {
-      console.error("Error fetching vote counts:", error);
+      console.error("Error fetching proposal names:", error);
+    }
+  }
+
+  const checkVotedStatus = async (contract, account) => {
+    try {
+      // Assuming the contract has a way to check if an address has voted
+      // This is a placeholder, adjust based on your actual contract
+      const winner = await contract.winnerName();
+      setWinnerName(winner);
+    } catch (error) {
+      console.error("Error checking voted status:", error);
     }
   };
+
+  const getWinnerName = async (contract) => {
+    try {
+      const winner = await contract.winnerName();
+      setWinnerName(winner);
+    } catch (error) {
+      console.error("Error getting winner name:", error);
+    }
+  }
 
   const vote = async (proposal) => {
     try {
       const tx = await contract.vote(proposal);
-      await tx.wait(); 
-      console.log("Vote successful");
-
-      // Update vote counts after voting
-      await updateVoteCounts(contract);
+      await tx.wait();
+      setHasVoted(true);
+      await getWinnerName(contract);
     } catch (error) {
       console.error("Voting error:", error);
     }
@@ -123,38 +155,44 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Voting DApp</h1>
-      {isConnected ? ( // Conditionally render content based on connection status
+      <h1>Divine's Voting DApp</h1>
+      {account ? (
         <div>
           <p>Connected Account: {account}</p>
-          <button onClick={() => vote(1)}>Vote for Proposal 1</button>
-          <button onClick={() => vote(2)}>Vote for Proposal 2</button>
-          <p>Proposal 1 Votes: {proposal1Votes}</p>
-          <p>Proposal 2 Votes: {proposal2Votes}</p>
+          {hasVoted ? (
+            <p>You have already voted.</p>
+          ) : (
+            <div>
+              {proposals.map((proposal, index) => (
+                <button key={index} onClick={() => vote(index)}>Vote for {proposal}</button>
+              ))}
+            </div>
+          )}
+          <p>Winner: {winnerName}</p>
         </div>
       ) : (
         <button onClick={async () => {
           if (window.ethereum) {
             try {
               await window.ethereum.request({ method: 'eth_requestAccounts' });
-
-              // Check if the user is connected to the Sepolia network
               const chainId = await window.ethereum.request({ method: 'eth_chainId' });
-              if (chainId !== '0xaa36a7') { // Sepolia chain ID
+              if (chainId !== '0xaa36a7') {
                 alert("Please connect to the Sepolia test network.");
                 return;
               }
 
-              const newProvider = new ethers.BrowserProvider(window.ethereum);
-              const newSigner = await newProvider.getSigner();
-              const newAccount = await newSigner.getAddress();
-              setAccount(newAccount);
-              setProvider(newProvider);
-              setSigner(newSigner)
-              const newContract = new ethers.Contract(contractAddress, contractABI, newSigner);
-              setContract(newContract);
-              await updateVoteCounts(newContract);
-              setIsConnected(true); // Set isConnected to true after successful connection
+              const provider = new ethers.BrowserProvider(window.ethereum);
+              const signer = await provider.getSigner();
+              const account = await signer.getAddress();
+
+              setAccount(account);
+              const contract = new ethers.Contract(contractAddress, contractABI, signer);
+              setContract(contract);
+
+              await getProposalNames(contract);
+              await checkVotedStatus(contract, account);
+              await getWinnerName(contract);
+
             } catch (error) {
               console.error("Error connecting:", error);
             }
