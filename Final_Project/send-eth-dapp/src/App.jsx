@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ConnectWallet from './components/ConnectWallet';
 import Balance from './components/Balance';
 import SendEthForm from './components/SendEthForm';
+import Voting from './components/Voting';
 import { connectWallet, getBalance, sendETH } from './utils/ethers';
 import './index.css'; // Import the CSS file
 
@@ -46,7 +47,7 @@ function App() {
 
   return (
     <div className="container">
-      <h1>Send ETH DApp</h1>
+      <h1>Send + Vote</h1>
       {!account ? (
         <ConnectWallet onConnect={handleConnectWallet} />
       ) : (
@@ -54,6 +55,7 @@ function App() {
           <p>Account: {account}</p>
           <Balance balance={balance} />
           <SendEthForm onSend={handleSendETH} />
+          <Voting account={account} />
         </>
       )}
     </div>

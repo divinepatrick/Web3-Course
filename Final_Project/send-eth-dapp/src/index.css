@@ -55,3 +55,101 @@ label {
 form div {
   margin-bottom: 15px;
 }
+
+.voting-container {
+  background: #23272f;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-top: 2rem;
+  color: #fff;
+  box-shadow: 0 2px 8px #0003;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.proposals {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+@media (min-width: 600px) {
+  .proposals {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+.proposal-card {
+  background: #2d323c;
+  border-radius: 8px;
+  padding: 1rem;
+  flex: 1;
+  min-width: 120px;
+  text-align: center;
+  border: 2px solid #444;
+  transition: border 0.2s;
+}
+
+.proposal-card.voted {
+  border: 2px solid #4caf50;
+}
+
+.proposal-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.proposal-votes {
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+
+.vote-btn {
+  background: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 1.2rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.vote-btn:disabled {
+  background: #888;
+  cursor: not-allowed;
+}
+
+.winner-section {
+  margin-top: 1.5rem;
+  font-size: 1.1rem;
+}
+
+.status-section {
+  margin-top: 1rem;
+}
+
+.status.voted {
+  color: #4caf50;
+}
+
+.status.not-voted {
+  color: #ff9800;
+}
+
+.loading {
+  color: #aaa;
+}
+
+.error {
+  color: #f44336;
+  margin-top: 0.5rem;
+}
+
+.success {
+  color: #4caf50;
+  margin-top: 0.5rem;
+}
