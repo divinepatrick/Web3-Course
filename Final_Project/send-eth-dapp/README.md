@@ -2,13 +2,21 @@
 
 ## Overview
 
-This project is a simple decentralized application (DApp) built with Ethersjs, React and Vite that allows users to connect their MetaMask wallet, view their ETH balance, and send ETH to other Ethereum addresses. It uses the `ethers` library to interact with the Ethereum blockchain.
+This project is a decentralized application (DApp) built with React, Vite, and Ethers.js. It allows users to connect their MetaMask wallet, view their ETH balance, send ETH, and participate in a decentralized voting process on the Sepolia testnet.
 
 ## Features
 
--   **Connect Wallet:** You can Connect to the DApp using MetaMask.
--   **View Balance:** It will Display the connected wallet's ETH balance.
--   **Send ETH:** Plus you can Send ETH to other Ethereum addresses.
+-  **Connect Wallet:** Connect your MetaMask wallet to the DApp.
+-   **View Balance:** Display the connected wallet's ETH balance.
+-   **Send ETH:** Send ETH to other Ethereum addresses.
+-   **Voting Interface:**  
+    - View two proposals and their real-time vote counts.
+    - Cast your vote for either proposal (one vote per account).
+    - See if you have already voted and which proposal you voted for.
+    - View the current winning proposal.
+    - Voting buttons are disabled if you have already voted.
+    - Real-time updates after voting.
+    - Transaction status indicators (pending, success, error).
 
 ## Technologies I Used
 
@@ -42,7 +50,8 @@ This project is a simple decentralized application (DApp) built with Ethersjs, R
 
 ### Configuration
 
-No specific configuration is required. The DApp uses the `window.ethereum` object provided by MetaMask to connect to the Ethereum network. Ensure that MetaMask is installed and configured to connect to the desired Ethereum network (e.g., Mainnet, Goerli, Sepolia, or a local development network).
+No specific configuration is required. The DApp uses the `window.ethereum` object provided by MetaMask to connect to the Ethereum network.  
+**Note:** For voting, ensure MetaMask is set to the Sepolia testnet (chainId: 11155111).
 
 ### Running the DApp
 
@@ -57,44 +66,37 @@ No specific configuration is required. The DApp uses the `window.ethereum` objec
 ## Usage
 
 1.  **Connect Wallet:**
-    -   If you haven't already, install the MetaMask browser extension.
+    -   Install MetaMask if you haven't already.
     -   Open the DApp in your browser.
-    -   Click the "Connect Wallet" button.
-    -   MetaMask will prompt you to connect your account to the DApp. Follow the prompts to connect.
+    -   Click the "Connect Wallet" button and follow MetaMask prompts.
 
 2.  **View Balance:**
-    -   Once your wallet is connected, the DApp will display your ETH balance.
+    -   Once connected, your ETH balance will be displayed.
 
 3.  **Send ETH:**
-    -   Enter the recipient's Ethereum address in the "Recipient Address" field.
-    -   Enter the amount of ETH you want to send in the "Amount (ETH)" field.
-    -   Click the "Send ETH" button.
-    -   MetaMask will prompt you to confirm the transaction. Review the transaction details and confirm.
-    -   A confirmation message will appear if the transaction is successful, and an error message will appear if the transaction fails.
+    -   Enter the recipient's Ethereum address and the amount of ETH to send.
+    -   Click "Send ETH" and confirm the transaction in MetaMask.
+    -   Success or error messages will be shown.
+
+4.  **Voting:**
+    -   View both proposals and their current vote counts.
+    -   If you haven't voted, select your preferred proposal and confirm the transaction in MetaMask.
+    -   After voting, your choice and the updated vote counts will be displayed.
+    -   The current winning proposal is always shown.
+    -   Voting is only allowed once per account.
 
 ## Architecture
 
-The DApp follows a simple component-based architecture:
+The DApp uses a component-based architecture:
 
--   **`src/App.jsx`:** The main component that manages the application state and renders the UI. It handles connecting the wallet, fetching the balance, and sending ETH.
--   **`src/components/ConnectWallet.jsx`:** A component that renders the "Connect Wallet" button and handles the wallet connection logic.
--   **`src/components/Balance.jsx`:** A component that displays the user's ETH balance.
--   **`src/components/SendEthForm.jsx`:** A component that renders the form for sending ETH and handles the transaction logic.
--   **`src/utils/ethers.js`:** A module that contains utility functions for interacting with the Ethereum blockchain using the `ethers` library. This includes functions for connecting to the wallet, fetching the balance, and sending ETH.
+-   **`src/App.jsx`:** Main component managing state and rendering the UI.
+-   **`src/components/ConnectWallet.jsx`:** Handles wallet connection.
+-   **`src/components/Balance.jsx`:** Displays ETH balance.
+-   **`src/components/SendEthForm.jsx`:** Form for sending ETH.
+-   **`src/components/Voting.jsx`:** Voting interface for proposals.
+-   **`src/utils/ethers.js`:** Utility functions for blockchain interaction (wallet, balance, send ETH, voting).
+-   **`src/index.css`:** CSS styles for my dapp
 
-## Code Structure
-
--   **`index.html`:** The main HTML file that serves as the entry point for the DApp.
--   **`src/main.jsx`:** The main JavaScript file that initializes the React application and renders the `App` component into the `root` element in `index.html`.
--   **`src/App.jsx`:** The main application component that manages the overall state and renders the different sections of the DApp based on whether a wallet is connected or not.
--   **`src/components/ConnectWallet.jsx`:** This component renders a button that, when clicked, triggers the wallet connection process using the `connectWallet` function from `src/utils/ethers.js`.
--   **`src/components/Balance.jsx`:** This component receives the `balance` prop and displays it to the user. It shows "Loading..." while the balance is being fetched.
--   **`src/components/SendEthForm.jsx`:** This component provides a form for the user to enter the recipient's address and the amount of ETH to send. It calls the `sendETH` function from `src/utils/ethers.js` when the form is submitted.
--   **`src/utils/ethers.js`:** This module contains the core logic for interacting with the Ethereum blockchain. It includes functions for:
-    -   `connectWallet`: Connects to the user's MetaMask wallet and retrieves their address.
-    -   `getBalance`: Fetches the ETH balance of a given address.
-    -   `sendETH`: Sends ETH from the connected wallet to a specified address.
--   **`src/index.css`:** Contains the CSS styles for the entire application, providing a consistent look and feel.
 
 ## Dependencies
 
@@ -110,4 +112,4 @@ The DApp follows a simple component-based architecture:
 
 Contributions are welcome! Please feel free to submit pull requests or open issues to suggest improvements or report bugs.
 
-## Thats all I can think of!
+## Thats it!
