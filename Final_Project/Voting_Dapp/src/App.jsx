@@ -124,8 +124,8 @@ function App() {
 
   const checkVotedStatus = async (contract, account) => {
     try {
-      // Assuming the contract has a way to check if an address has voted
-      // This is a placeholder, adjust based on your actual contract
+      
+      // This is a placeholder
       const winner = await contract.winnerName();
       setWinnerName(winner);
     } catch (error) {
