@@ -1,4 +1,4 @@
-# Send ETH DApp
+# Send ETH & Voting DApp
 
 ## Overview
 
