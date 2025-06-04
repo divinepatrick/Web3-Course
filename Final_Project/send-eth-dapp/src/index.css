@@ -1,77 +1,133 @@
-body {
-  font-family: sans-serif;
-  background-color: #f0f0f0;
+/* Reset and base styles */
+* {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
 }
 
+body {
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  background: linear-gradient(135deg, #23272f 0%, #181c22 100%);
+  min-height: 100vh;
+  color: #e0e6ed;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 32px 8px;
+}
+
+/* Container */
 .container {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  width: 500px;
+  background: rgba(34, 39, 47, 0.98);
+  padding: 32px 24px;
+  border-radius: 18px;
+  box-shadow: 0 8px 32px 0 rgba(0,0,0,0.25);
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
   text-align: center;
+  border: 1.5px solid #31363f;
+  transition: box-shadow 0.2s;
 }
 
 h1 {
-  color: #333;
+  color: #4cafef;
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  letter-spacing: 1px;
 }
 
-button {
-  background-color: #4CAF50;
-  color: white;
-  padding: 10px 15px;
+p, label, .winner-section, .status-section {
+  color: #bfc9d7;
+}
+
+button, .vote-btn {
+  background: linear-gradient(90deg, #4cafef 0%, #4caf50 100%);
+  color: #fff;
+  padding: 12px 22px;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 1.08rem;
+  font-weight: 600;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  box-shadow: 0 2px 8px #0002;
+  transition: background 0.2s, transform 0.1s;
+  outline: none;
 }
 
-button:hover {
-  background-color: #3e8e41;
+button:active, .vote-btn:active {
+  transform: scale(0.97);
+}
+
+button:hover:not(:disabled), .vote-btn:hover:not(:disabled) {
+  background: linear-gradient(90deg, #43a1e6 0%, #43a047 100%);
+}
+
+button:disabled, .vote-btn:disabled {
+  background: #444c5e;
+  color: #bfc9d7;
+  cursor: not-allowed;
+  opacity: 0.7;
 }
 
 input[type="text"],
 input[type="number"] {
   width: 100%;
-  padding: 8px;
-  margin: 8px 0;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
+  padding: 10px 12px;
+  margin: 8px 0 16px 0;
+  border: 1.5px solid #31363f;
+  border-radius: 6px;
+  background: #23272f;
+  color: #e0e6ed;
+  font-size: 1rem;
+  transition: border 0.2s;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus {
+  border: 1.5px solid #4cafef;
+  outline: none;
 }
 
 label {
   display: block;
   margin-top: 10px;
-  color: #555;
+  color: #8fa1b3;
+  font-size: 1rem;
+  text-align: left;
 }
 
 form div {
-  margin-bottom: 15px;
+  margin-bottom: 18px;
 }
 
 .voting-container {
-  background: #23272f;
-  border-radius: 12px;
-  padding: 1.5rem;
+  background: rgba(34, 39, 47, 0.98);
+  border-radius: 16px;
+  padding: 1.5rem 1rem;
   margin-top: 2rem;
   color: #fff;
-  box-shadow: 0 2px 8px #0003;
+  box-shadow: 0 2px 12px #0003;
   max-width: 500px;
   margin-left: auto;
   margin-right: auto;
+  border: 1.5px solid #31363f;
+}
+
+.voting-container h2 {
+  color: #4cafef;
+  font-size: 1.5rem;
+  margin-bottom: 1.2rem;
+  font-weight: 600;
 }
 
 .proposals {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.2rem;
 }
 
 @media (min-width: 600px) {
@@ -82,50 +138,48 @@ form div {
 }
 
 .proposal-card {
-  background: #2d323c;
-  border-radius: 8px;
-  padding: 1rem;
+  background: linear-gradient(135deg, #2d323c 60%, #23272f 100%);
+  border-radius: 10px;
+  padding: 1.2rem 0.8rem;
   flex: 1;
   min-width: 120px;
   text-align: center;
-  border: 2px solid #444;
-  transition: border 0.2s;
+  border: 2.5px solid #31363f;
+  transition: border 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px #0002;
+  position: relative;
 }
 
 .proposal-card.voted {
-  border: 2px solid #4caf50;
+  border: 2.5px solid #4caf50;
+  box-shadow: 0 0 12px #4caf5077;
 }
 
 .proposal-title {
-  font-size: 1.2rem;
-  font-weight: bold;
+  font-size: 1.15rem;
+  font-weight: 700;
   margin-bottom: 0.5rem;
+  color: #4cafef;
+  letter-spacing: 0.5px;
 }
 
 .proposal-votes {
-  margin-bottom: 0.5rem;
-  font-size: 1rem;
+  margin-bottom: 0.7rem;
+  font-size: 1.05rem;
+  color: #bfc9d7;
 }
 
 .vote-btn {
-  background: #4caf50;
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  padding: 0.5rem 1.2rem;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.vote-btn:disabled {
-  background: #888;
-  cursor: not-allowed;
+  width: 100%;
+  margin: 0;
 }
 
 .winner-section {
   margin-top: 1.5rem;
-  font-size: 1.1rem;
+  font-size: 1.13rem;
+  color: #ffe082;
+  font-weight: 600;
+  letter-spacing: 0.5px;
 }
 
 .status-section {
@@ -134,22 +188,44 @@ form div {
 
 .status.voted {
   color: #4caf50;
+  font-weight: 600;
 }
 
 .status.not-voted {
   color: #ff9800;
+  font-weight: 600;
 }
 
 .loading {
   color: #aaa;
+  font-size: 1.1rem;
 }
 
 .error {
   color: #f44336;
   margin-top: 0.5rem;
+  font-weight: 600;
 }
 
 .success {
   color: #4caf50;
   margin-top: 0.5rem;
+  font-weight: 600;
+}
+
+/* Responsive tweaks */
+@media (max-width: 600px) {
+  .container, .voting-container {
+    padding: 18px 4px;
+    max-width: 98vw;
+  }
+  h1 {
+    font-size: 1.4rem;
+  }
+  .proposal-title {
+    font-size: 1rem;
+  }
+  .winner-section {
+    font-size: 1rem;
+  }
 }
