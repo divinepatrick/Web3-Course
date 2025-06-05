@@ -4,6 +4,12 @@
 
 This project is a decentralized application (DApp) built with React, Vite, and Ethers.js. It allows users to connect their MetaMask wallet, view their ETH balance, send ETH, and participate in a decentralized voting process on the Sepolia testnet.
 
+## 📺 Demo Video
+
+[Click here to watch the demo video](https://youtu.be/QJEfbgYdjr4?si=TLcSkSkDi85Zlrml)
+
+
+
 ## Features
 
 -  **Connect Wallet:** Connect your MetaMask wallet to the DApp.
