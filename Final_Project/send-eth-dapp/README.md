@@ -119,4 +119,7 @@ The DApp uses a component-based architecture:
 
 Contributions are welcome! Please feel free to submit pull requests or open issues to suggest improvements or report bugs.
 
-## Thats it!
+## AI Assistance
+Some portions of this code were written with the help of ChatGPT by OpenAI (June 2025), based on my prompts.
+
+## Thats all!
